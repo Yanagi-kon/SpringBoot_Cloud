@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.entity.resp.RestBean;
 import com.example.service.TextRecognitionService;
+import com.example.service.impl.ItemRecognitionServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ public class RecognitionController {
 
     @Resource
     TextRecognitionService recognitionService;
+    @Resource
+    ItemRecognitionServiceImpl itemRecognitionService;
 
     @RequestMapping(value = "/path",method = RequestMethod.GET)
     public RestBean<String> get(String picture){
@@ -25,11 +28,11 @@ public class RecognitionController {
         return new RestBean<>(200,"调用成功",result);
     }
 
-    @PostMapping("/upload")
-    public RestBean<Void> info(){
-//        recognitionService.textGeneral();
-        return new RestBean<>(200,"处理结果为");
+    @GetMapping("/item")
+    public RestBean<String > getItem(String picture){
+        String result;
+        result = itemRecognitionService.ItemRecognition(picture);
+        System.out.println(result);
+        return new RestBean<>(200,"调用成功",result);
     }
-
-
 }
